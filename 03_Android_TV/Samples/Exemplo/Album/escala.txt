@@ -1,0 +1,15 @@
+#TITLE:Escala demonstrativa
+#ARTIST:Exemplo
+#MP3:escala.wav
+#BPM:120
+#GAP:1500
+: 0 2 0 Dó
+: 2 2 2 Ré
+* 4 2 4 Mi
+: 6 2 5 Fá
+- 8
+: 10 2 7 Sol
+: 12 2 9 Lá
+: 14 2 11 Si
+: 16 4 12 Dó
+E

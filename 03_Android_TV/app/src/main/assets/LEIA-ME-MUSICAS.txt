@@ -1,0 +1,8 @@
+Organização da pasta selecionada:
+Musicas/Artista/Album/faixa.mp4
+Musicas/Artista/Album/faixa.txt
+
+O arquivo UltraStar TXT deve ter o mesmo nome-base da mídia.
+Exemplo: Beatles/Abbey Road/musica.mp3 + musica.txt
+Mídias sem TXT podem ser reproduzidas, mas não pontuadas.
+Use microfone USB na TV Box para melhor compatibilidade.

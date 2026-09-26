@@ -1,0 +1,12 @@
+# Compilacao .NET e Android
+**/bin/
+**/obj/
+**/.gradle/
+**/build/
+**/local.properties
+**/.idea/
+**/.vs/
+*.user
+*.suo
+*.apk
+*.aab

@@ -1,0 +1,27 @@
+KARAOKE APP - PACOTE PARA INSTALAR NO WINDOWS 10/11 64 BITS
+
+1. Extraia este ZIP (nao execute diretamente dentro dele).
+2. Clique duas vezes em INSTALAR_NO_WINDOWS.cmd.
+3. Se pedir, instale o .NET 8 SDK (Windows x64) da pagina oficial que sera aberta.
+   Feche e abra novamente o instalador apos instalar o SDK.
+4. O instalador compila um executavel autonomo do Windows, instala em
+   %LOCALAPPDATA%\Programs\KaraokeApp e cria atalhos.
+5. Para tocar musicas e videos, instale o FFmpeg com ffplay.exe:
+   https://ffmpeg.org/download.html
+   O instalador identifica ffplay.exe pelo PATH, caminhos comuns ou caminho manual.
+6. Ao iniciar, informe uma pasta de musicas organizada em Artista\Album\Faixas.
+   Partituras .txt UltraStar associadas permitem pontuacao pelo microfone.
+
+REQUER INTERNET SOMENTE DURANTE A INSTALACAO para baixar dependencias NuGet.
+O .NET 8 SDK e necessario para COMPILAR, nao para executar o programa instalado.
+O FFplay e uma dependencia externa que nao vem no ZIP.
+
+IMPORTANTE: este pacote e um CONSTRUTOR/INSTALADOR, NAO um Setup.exe pronto.
+Ele gera KaraokeApp.exe no proprio Windows. A compilacao e o microfone nao
+puderam ser validados neste ambiente Linux sem o SDK .NET nem drivers Windows.
+
+OPCIONAL: para criar Setup.exe distribuivel a outros computadores, execute
+'dotnet publish KaraokeApp.csproj -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -o publish'
+e compile KaraokeApp.iss com Inno Setup 6.
+
+O aplicativo e de CONSOLE: nao e uma interface grafica de karaoke.
