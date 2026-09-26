@@ -1,0 +1,62 @@
+name: Gerar versões Windows
+
+on:
+  push:
+    branches: [main, master]
+    paths:
+      - '.github/workflows/build-windows.yml'
+      - '01_Console_NET/**'
+      - '02_Instalador_Windows/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - name: Obter projeto
+        uses: actions/checkout@v4
+
+      - name: Instalar .NET 8 SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Compilar versão Console Windows x64
+        shell: pwsh
+        run: |
+          dotnet publish 01_Console_NET/KaraokeApp.csproj -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -o dist/console
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          Copy-Item -Recurse 01_Console_NET/Samples dist/console/Samples
+
+      - name: Disponibilizar Console Windows
+        uses: actions/upload-artifact@v4
+        with:
+          name: KaraokeApp-Console-Windows-x64
+          path: dist/console/
+          if-no-files-found: error
+
+      - name: Compilar versão do instalador
+        shell: pwsh
+        run: |
+          dotnet publish 02_Instalador_Windows/KaraokeApp.csproj -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -o 02_Instalador_Windows/publish
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
+      - name: Instalar Inno Setup 6
+        shell: pwsh
+        run: choco install innosetup --yes --no-progress
+
+      - name: Criar instalador Setup.exe
+        shell: pwsh
+        run: |
+          & 'C:\Program Files (x86)\Inno Setup 6\ISCC.exe' '02_Instalador_Windows\KaraokeApp.iss'
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
+      - name: Disponibilizar instalador Windows
+        uses: actions/upload-artifact@v4
+        with:
+          name: KaraokeApp-Instalador-Windows-x64
+          path: 02_Instalador_Windows/InstaladorGerado/KaraokeApp_Setup_Windows_x64.exe
+          if-no-files-found: error
